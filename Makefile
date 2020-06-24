@@ -50,7 +50,7 @@ else
 endif
 
 TOPLEVEL := mk_non_restoring_divider
-MODULE   := test_divider
+MODULE   := test_mkdivip
 
 #include $(shell cocotb-config --makefiles)/Makefile.inc
 include $(shell cocotb-config --makefiles)/Makefile.sim

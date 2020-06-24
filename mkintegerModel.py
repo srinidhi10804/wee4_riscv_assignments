@@ -17,57 +17,6 @@ typedef enum {
 undefined =  -1#18446744073709551615
 #----------------------------------------------------------------------------------------------------
 
-def signed_rem(a,b):    #16
-    if(a<0 and b>0):
-        quotient = math.ceil(a/b)
-    elif (b<0 and a>0):
-        quotient = math.ceil(a/b)
-    elif(a<0 and b<0):
-        quotient = math.floor(a/b) 
-    elif(b!=0):
-        return(unsigned_rem(a,b))
-    
-    if(b==0):
-        remainder = a
-    else:
-        remainder = a-(b*quotient)
-    # print(remainder)
-    # print(BinaryValue(value=remainder,n_bits=64,bigEndian=False,binaryRepresentation=1))
-    return(BinaryValue(value=remainder,n_bits=64,bigEndian=False,binaryRepresentation=2))
-#----------------------------------------------------------------------------------------------------
-
-def signed_div(a,b):    #14
-    # print('in hex =', hex(a))
-    # print("a in model after bit padding",a)
-    # print("b in model after bit padding",b)        
-    # if(0>a):    
-    # 	print("a is negative")
-    # else:
-    # 	print("a is positive")
-    if(b==0):
-        quotient = undefined
-    elif(a<0 and b>0):
-        quotient = math.ceil(a/b)
-    elif (b<0 and a>0):
-        quotient = math.ceil(a/b)
-    else:
-        quotient = math.floor(a/b)
-
-    # print(quotient)
-    # print(BinaryValue(value=quotient,n_bits=64,bigEndian=False,binaryRepresentation=1))
-    return(BinaryValue(value=quotient,n_bits=64,bigEndian=False,binaryRepresentation=2))
-#----------------------------------------------------------------------------------------------------
-
-def unsigned_rem(a,b):  #17
-    if(b==0):
-        remainder = a
-    else:
-        remainder = (a%b)
-        
-    # return (a%b)
-    # print(remainder)
-    # # print(BinaryValue(value=remainder,n_bits=64,bigEndian=False))
-    return(BinaryValue(value=remainder,n_bits=64,bigEndian=False))
 #----------------------------------------------------------------------------------------------------
 
 def unsigned_div(a,b):  #15
@@ -75,62 +24,36 @@ def unsigned_div(a,b):  #15
         quotient = undefined
     else:
         quotient = math.floor(a/b)
-        
+        quotient = quotient | 2**64
     # print(quotient)
     # print(BinaryValue(value=quotient,n_bits=64,bigEndian=False))
     if(quotient==undefined):
-        return(BinaryValue(value=quotient,bits=64,bigEndian=False,binaryRepresentation=2))
+        return(BinaryValue(value=quotient,bits=65,bigEndian=False,binaryRepresentation=2))
     else:
-        return(BinaryValue(value=quotient,n_bits=64,bigEndian=False))
+        return(BinaryValue(value=quotient,n_bits=65,bigEndian=False))
 #----------------------------------------------------------------------------------------------------
-
-def signed_div_32_bit(a,b):    #18
-    # print("a in model ",a)
-    # print("b in model ",b)        
-    # if(0>a):    
-    # 	print("a is negative")
-    # else:
-    # 	print("a is positive")
-
-    # if(0>b):    
-    # 	print("b is negative")
-    # else:
-    # 	print("b is positive")
-
-    if(b==0):
-        quotient = undefined
-    elif(a<0 and b>0):
-        quotient = math.ceil(a/b)
-    elif (b<0 and a>0):
-        quotient = math.ceil(a/b)
-    else:
-        quotient = math.floor(a/b)
-
-    # print(quotient)
-    # print(BinaryValue(value=quotient,n_bits=64,bigEndian=False,binaryRepresentation=1))
-    return(BinaryValue(value=quotient,n_bits=64,bigEndian=False,binaryRepresentation=2))
 
 #---------------------------------------------------------------------------------------------------
 
-def divider_model(a,b,divName):
+def divider_model(a,b,opcode,funct3):
     
-    if(divName==15):
+    if(opcode == 12 and funct3 == 5):
         return(unsigned_div(a,b))
-    elif(divName==17):
+    elif(opcode==17):
         return unsigned_rem(a,b)
-    elif(divName==14):
+    elif(opcode==14):
         return signed_div(a,b)
-    elif(divName==16):
+    elif(opcode==16):
         return signed_rem(a,b)
 #**********************************************
-    if(divName==19):
+    if(opcode==19):
         return(unsigned_div(a,b))
-    elif(divName==21):
+    elif(opcode==21):
         return unsigned_rem(a,b)
-    elif(divName==18):
+    elif(opcode==18):
     	# return 0
         return signed_div_32_bit(a,b)
-    elif(divName==20):
+    elif(opcode==20):
         return signed_rem(a,b)
     else:
         print("divName Error..")
