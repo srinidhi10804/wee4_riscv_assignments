@@ -14,7 +14,7 @@ typedef enum {
 
 '''
 # 18446744073709551599
-undefined =  -1#18446744073709551615
+undefined =  0x1ffffffffffffffff
 #----------------------------------------------------------------------------------------------------
 
 #----------------------------------------------------------------------------------------------------
@@ -28,7 +28,8 @@ def unsigned_div(a,b):  #15
     # print(quotient)
     # print(BinaryValue(value=quotient,n_bits=64,bigEndian=False))
     if(quotient==undefined):
-        return(BinaryValue(value=quotient,bits=65,bigEndian=False,binaryRepresentation=2))
+        #return(BinaryValue(value=quotient,bits=65,bigEndian=False,binaryRepresentation=2))
+        return(BinaryValue(value=quotient,n_bits=65,bigEndian=False))
     else:
         return(BinaryValue(value=quotient,n_bits=65,bigEndian=False))
 #----------------------------------------------------------------------------------------------------

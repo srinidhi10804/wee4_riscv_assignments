@@ -29,28 +29,13 @@
 
 TOPLEVEL_LANG ?= verilog
 
-COMPILE_ARGS = -LDFLAGS -Wl,--no-as-needed +define+BSV_RESET_FIFO_HEAD +define+BSV_RESET_FIFO_ARRAY +warn=none
+COMPILE_ARGS += -LDFLAGS -Wl,--no-as-needed +define+BSV_RESET_FIFO_HEAD +define+BSV_RESET_FIFO_ARRAY
 PWD=$(shell pwd)
 
-#ifeq ($(OS),Msys)
-#WPWD=$(shell sh -c 'pwd -W')
-#PYTHONPATH := $(WPWD)/../model;$(PYTHONPATH)
-#else
-WPWD=$(shell pwd)
-export PYTHONPATH := $(WPWD)/../model:$(PYTHONPATH)
-#endif
 
-ifeq ($(TOPLEVEL_LANG),verilog)
-#     mkinteger_divider.v
-    VERILOG_SOURCES = $(WPWD)/../../../verilog/*.v
-else ifeq ($(TOPLEVEL_LANG),vhdl)
-    VHDL_SOURCES = $(WPWD)/../hdl/adder.vhdl
-else
-    $(error "A valid value (verilog or vhdl) was not provided for TOPLEVEL_LANG=$(TOPLEVEL_LANG)")
-endif
+VERILOG_SOURCES = $(TOP_DIR)/$(TOP_MODULE).v
 
-TOPLEVEL := mk_non_restoring_divider
-MODULE   := test_mkdivip
+TOPLEVEL := $(TOP_MODULE)
+MODULE   := test_divider
 
-#include $(shell cocotb-config --makefiles)/Makefile.inc
 include $(shell cocotb-config --makefiles)/Makefile.sim
