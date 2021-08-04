@@ -29,7 +29,7 @@
 
 TOPLEVEL_LANG ?= verilog
 
-COMPILE_ARGS += COMPILE_ARGS += -O3 --x-assign fast --x-initial fast \
+COMPILE_ARGS += -O3 --x-assign fast --x-initial fast \
   --noassert --bbox-sys -Wno-STMTDLY -Wno-UNOPTFLAT -Wno-WIDTH \
   -Wno-lint -Wno-COMBDLY -Wno-INITIALDLY --autoflush  --threads 1 \
   -DBSV_RESET_FIFO_HEAD -DBSV_RESET_FIFO_ARRAY --output-split 20000 --output-split-ctrace 10000
