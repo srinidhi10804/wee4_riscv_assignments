@@ -29,7 +29,11 @@
 
 TOPLEVEL_LANG ?= verilog
 
-COMPILE_ARGS += -LDFLAGS -Wl,--no-as-needed +define+BSV_RESET_FIFO_HEAD +define+BSV_RESET_FIFO_ARRAY
+COMPILE_ARGS += COMPILE_ARGS += -O3 --x-assign fast --x-initial fast \
+  --noassert --bbox-sys -Wno-STMTDLY -Wno-UNOPTFLAT -Wno-WIDTH \
+  -Wno-lint -Wno-COMBDLY -Wno-INITIALDLY --autoflush  --threads 1 \
+  -DBSV_RESET_FIFO_HEAD -DBSV_RESET_FIFO_ARRAY --output-split 20000 --output-split-ctrace 10000
+  
 PWD=$(shell pwd)
 
 
