@@ -1,3 +1,5 @@
+cd mbox
+make generate_verilog TOP_MODULE=mk_non_restoring_divider TOP_DIR=non_restoring_divider TOP_FILE=non_restoring_divider.bsv
 ###############################################################################
 # Copyright (c) 2013 Potential Ventures Ltd
 # Copyright (c) 2013 SolarFlare Communications Inc
@@ -33,13 +35,13 @@ COMPILE_ARGS += -O3 --x-assign fast --x-initial fast \
   --noassert --bbox-sys -Wno-STMTDLY -Wno-UNOPTFLAT -Wno-WIDTH \
   -Wno-lint -Wno-COMBDLY -Wno-INITIALDLY --autoflush  --threads 1 \
   -DBSV_RESET_FIFO_HEAD -DBSV_RESET_FIFO_ARRAY --output-split 20000 --output-split-ctrace 10000 --Wno-TIMESCALEMOD
-  
+
 PWD=$(shell pwd)
 
 
-VERILOG_SOURCES = $(TOP_DIR)/$(TOP_MODULE).v
+VERILOG_SOURCES = srt_radix4_divider  /mk_srt_radix4_divider.bsv
 
-TOPLEVEL := $(TOP_MODULE)
+TOPLEVEL := mk_srt_radix4_divider
 MODULE   := test_divider
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
